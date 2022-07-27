@@ -1,4 +1,5 @@
 # This is a dummy file to trigger the ci_model pipeline with the training of a new model
-# This method was found in the repo RasaHQ/financial-demo-bot (https://github.com/RasaHQ/financial-demo)
+# This method was found in the repo RasaHQ/financial-demo-bot (https://github.com/Ra
+saHQ/financial-demo)
 
 # Just change something arbitrary in this text, like a space. 
