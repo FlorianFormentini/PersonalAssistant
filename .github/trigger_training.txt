@@ -2,4 +2,4 @@
 # This method was found in the repo RasaHQ/financial-demo-bot (https://github.com/Ra
 saHQ/financial-demo)
 
-# Just change something arbitrary in this text, like a space. 
+# Just change something arbitrary in this text, like a space.  

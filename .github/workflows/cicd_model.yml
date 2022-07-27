@@ -44,6 +44,7 @@ jobs:
       if: ${{ steps.files_check.outputs.was_modified }}
       working-directory: ${{ github.workspace }}/app
       run: |
+        cd bot
         rasa data validate --debug --fail-on-warnings
     
     outputs:  # pass training var to next jobs
