@@ -4,7 +4,7 @@ on:
     branches: [ master ]
     paths:
     - 'actions/**'
-    - '.github/trigger_actions_server.txt'
+    - '.github/trigger_action_server.txt'
 
 jobs:
   lint-testing:
