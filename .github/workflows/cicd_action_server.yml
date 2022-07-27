@@ -73,8 +73,8 @@ jobs:
         actions_directory: actions
         dockerfile: actions/Dockerfile
         docker_image_name: 'florianformentini/personalassistant-actionserver'
-        docker_registry_login: ${{ secrets.DOCKERHUB_LOGIN }}
-        docker_registry_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker_registry_login: ${{ secrets.DOCKERHUB_USER}}
+        docker_registry_password: ${{ secrets.DOCKERHUB_PWD}}
         # tag=latest - to auto deploy action server
         # tag=${{ github.sha }} - to have real versionning
         docker_image_tag: latest
