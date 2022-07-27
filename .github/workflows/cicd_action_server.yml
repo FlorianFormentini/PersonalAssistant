@@ -71,7 +71,7 @@ jobs:
       with:
         rasa_sdk_version: 3.1.0
         actions_directory: actions
-        dockerfile: actions/Dockerfile
+        requirements_file: actions/requirements-actions.txt
         docker_image_name: 'florianformentini/personalassistant-actionserver'
         docker_registry_login: ${{ secrets.DOCKERHUB_USER}}
         docker_registry_password: ${{ secrets.DOCKERHUB_PWD}}
