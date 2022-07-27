@@ -1,4 +1,4 @@
-name: Deploy action server image
+name: Deploy ActionServer Image
 on:
   push:
     branches: [ master ]

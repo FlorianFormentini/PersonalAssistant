@@ -1,4 +1,4 @@
-name: Deploy Bot Docker Image
+name: Deploy Bot Image
 on:
   push:
     branches: [ master ]
