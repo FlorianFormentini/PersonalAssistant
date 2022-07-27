@@ -42,7 +42,7 @@ jobs:
 
     - name: Data Validation ✅
       if: ${{ steps.files_check.outputs.was_modified }}
-      working-directory: ${{ github.workspace }}/app
+      working-directory: ${{ github.workspace }}
       run: |
         cd bot
         rasa data validate --debug --fail-on-warnings
