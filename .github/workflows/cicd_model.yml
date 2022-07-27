@@ -46,7 +46,7 @@ jobs:
       run: |
         rasa telemetry disable
         cd bot
-        rasa data validate --debug --fail-on-warnings
+        rasa data validate --debug
     
     outputs:  # pass training var to next jobs
       training: ${{ steps.files_check.outputs.was_modified }}
