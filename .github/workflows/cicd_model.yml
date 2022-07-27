@@ -1,0 +1,121 @@
+name: Deploy Bot Docker Image
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - bot
+    
+jobs:
+  data-validation:
+    name: Validate data changes 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+    - name: Check for changes in training data 🕵️‍♂️
+      id: files_check
+      if: |
+          contains(  steps.files.outputs.all, 'bot/data/' )
+          || contains(  steps.files.outputs.all, 'bot/config.yml' )
+          || contains(  steps.files.outputs.all, 'bot/domain.yml' )
+          || contains(  steps.files.outputs.all, '.github/trigger_training.txt' )
+      run: |
+        echo "> Data files modified"
+        # set output for next jobs
+        echo "::set-output name=was_modified::true"
+
+    - name: Set up Python 🐍
+      if: ${{ steps.files_check.outputs.was_modified }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9.13
+
+    - name: Install dependencies 🛠
+      if: ${{ steps.files_check.outputs.was_modified }}
+      run: |
+        python3 -m pip install --upgrade pip --user
+        python3 -m pip install -r bot/requirements-bot.txt --user
+
+    - name: Data Validation ✅
+      if: ${{ steps.files_check.outputs.was_modified }}
+      working-directory: ${{ github.workspace }}/app
+      run: |
+        rasa data validate --debug --fail-on-warnings
+    
+    outputs:  # pass training var to next jobs
+      training: ${{ steps.files_check.outputs.was_modified }}
+
+
+  train-test-model:
+    name: Train/test model and deploy to Dockerhub
+    needs: data-validation
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository 🔎
+      uses: actions/checkout@v2
+
+    # Train/test model only if data files modified
+    - name: Set up Python 🐍
+      if: ${{needs.data-validation.outputs.training}}
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9.13
+
+    - name: Install dependencies 🛠
+      if: ${{needs.data-validation.outputs.training}}
+      run: |
+        python3 -m pip install --upgrade pip --user
+        python3 -m pip install -r bot/requirements-bot.txt --user
+
+    - name: Train and test model ⚙
+      working-directory: ${{ github.workspace }}
+      run: |
+        cd bot
+        rasa train
+        rasa test --fail-on-prediction-errors
+
+    - name: Log in to DockerHub 🐳
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        token: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker 📄
+      id: meta
+      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      with:
+        images: florianformentini/personalassistant
+
+    - name: test
+      run: |
+        echo ${{ steps.meta.outputs.tags }}
+        echo ${{ steps.meta.outputs.labels }}
+        echo ${{ steps.meta.outputs }}
+        
+    - name: Build and push Docker image 🚀
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      with:
+        context: ./bot
+        push: true
+        tags: latest
+        labels: ${{ steps.meta.outputs.labels }}
+
+
+    # - name: Upload model to Rasa X
+    #   env:
+    #     RASA_X_API_TOKEN: ${{ secrets.RASA_X_TOKEN }}
+    #     HOST: https://efelya.eu
+    #   working-directory: ${{ github.workspace }}
+    #   run: |
+    #     model_path=`ls models/*.tar.gz | head -n 1`
+    #     curl -k -F "model=@${model_path}" "${HOST}/api/projects/default/models?api_token=${RASA_X_API_TOKEN}"
+
+    #     # ensure model is ready and tag as production
+    #     sleep 10
+
+    #     export MODEL=$(basename ${model_path} .tar.gz)
+    #     curl -X PUT "${HOST}/api/projects/default/models/${MODEL}/tags/production?api_token=${RASA_X_API_TOKEN}"

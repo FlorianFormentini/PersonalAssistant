@@ -1,0 +1,26 @@
+version: '3.0'
+services:
+  # Chatbot
+  rasa:
+    restart: always
+    image: florianformentini/personalassistant:latest
+    networks: ['rasa-network']
+    ports:
+      - 5005:5005
+    env_file: vars-bot.env
+    command: >
+      run
+      --enable-api
+      --cors='*'
+
+
+  action-server:
+    restart: always
+    image: florianformentini/personalassistant-actionserver:latest
+    networks: ['rasa-network']
+    ports:
+      - 5055:5055
+    env_file: vars-actions.env
+  # Nginx ?
+
+networks: {rasa-network: {}}

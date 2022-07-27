@@ -1,0 +1,24 @@
+.vscode/
+.history
+*.DS_Store
+.ipynb_checkpoints
+
+# Environments
+*.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Rasa files
+**/models/
+*.db*
+**/results/
+**/.rasa/

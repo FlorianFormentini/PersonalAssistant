@@ -1,0 +1,22 @@
+version: "3.1"
+
+rules:
+- rule: Greetings
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: NLU Fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_nlu_fallback
+
+- rule: Add Bong
+  steps:
+  - intent: get_high
+  - action: action_get_high
+
+- rule: Count Bongs
+  steps:
+  - intent: how_many_bongs
+  - action: action_count_bongs

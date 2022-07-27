@@ -1,0 +1,41 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - salut
+    - hello
+    - hey
+    - coucou
+    - coucou toi
+    - salut toi
+    - salut bébé
+    - yo
+    - esclave
+    - hey minou
+    - coucou minou
+    - bonjour
+    - bonjour minou
+    - bonjour bébé
+
+- intent: get_high
+  examples: |
+    - j'ai coulé une douille
+    - je vais couler une douille
+    - je coule une douille
+    - ajoute une douille
+    - compte une douille en plus
+    - ajoute une douille de plus
+    - nouvelle douille
+    - une autre douille
+    - j'en coule une
+    - je vais en couler une
+    - j'en ai coulé une
+
+- intent: how_many_bongs
+  examples: |
+    - J'ai beaucoup fumé aujourd'hui ?
+    - J'en suis à combien de douilles ?
+    - Combien de douille j'ai fumé ?
+    - est-ce que je peux fumer ?
+    - est-ce que je peux couler une douille ?

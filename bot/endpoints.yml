@@ -1,0 +1,25 @@
+action_endpoint:
+  url: ${HOST_ACTIONS}:5055/webhook
+
+
+tracker_store:
+    type: mongod
+    url: ${DB_URI}
+    db: rasa
+    username: pa-db-admin
+    password: ${DB_PWD}
+
+
+# Server where the models are pulled from.
+# https://rasa.com/docs/rasa/model-storage#fetching-models-from-a-server
+#models:
+#  url: http://my-server.com/models/default_core@latest
+#  wait_time_between_pulls:  10   # [optional](default: 100)
+
+# Event broker which all conversation events should be streamed to.
+# https://rasa.com/docs/rasa/event-brokers
+#event_broker:
+#  url: localhost
+#  username: username
+#  password: password
+#  queue: queue

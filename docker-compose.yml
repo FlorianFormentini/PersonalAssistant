@@ -1,0 +1,26 @@
+# Start bot and its services in local
+# A trained model must be located in the 'models' folder
+version: '3.0'
+services:
+
+  rasa:
+    build: ./bot
+    ports:
+      - 5005:5005
+    env_file: .env
+    command: >
+      run
+      --enable-api
+      --cors='*'
+      --endpoints endpoints.yml
+      --jwt-secret ${JWT_SECRET}
+      --auth-token ${AUTH_TOKEN}
+
+
+  action-server:
+    build: ./actions
+    ports:
+      - 5055:5055
+    env_file: .env
+
+

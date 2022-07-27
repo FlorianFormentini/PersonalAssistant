@@ -1,0 +1,91 @@
+name: Deploy action server image
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'actions/**'
+    - '.github/trigger_actions_server.txt'
+
+jobs:
+  lint-testing:
+    name: Verify code formatting
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository 🔎
+      uses: actions/checkout@v2
+
+    - name: Set up Python 🐍
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9.13
+
+    - name: Install dependencies 🛠
+      run: |
+        python3 -m pip install --upgrade pip --user
+        python3 -m pip install -r actions/requirements-actions.txt --user
+
+    - name: Lint code
+      working-directory: ${{ github.workspace }}
+      run: |
+        make lint
+
+  type-testing:
+    name: Verify code types
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository 🔎
+      uses: actions/checkout@v2
+
+    - name: Set up Python 🐍
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9.13
+
+    - name: Install dependencies 🛠
+      run: |
+        python3 -m pip install --upgrade pip --user
+        python3 -m pip install -r actions/requirements-actions.txt --user
+        python3 -m pip install pytype==2022.2.23
+
+    # /!\ Pytype not supported on windows
+    - name: Code types check
+      working-directory: ${{ github.workspace }}
+      run: |
+        make types
+
+  build-deploy:
+    name: Build/Deploy Action Server
+    runs-on: ubuntu-latest
+    needs: [lint-testing, type-testing]
+
+    steps:
+    - name: Checkout repository 🔎
+      uses: actions/checkout@v2
+
+    - id: action_server
+      name: Build and push image to DockerHub 🐳
+      uses: RasaHQ/action-server-gha@main
+      # Full list of parameters: https://github.com/RasaHQ/action-server-gha/tree/master#input-arguments
+      with:
+        rasa_sdk_version: 3.1.0
+        actions_directory: actions
+        dockerfile: actions/Dockerfile
+        docker_image_name: 'florianformentini/personalassistant-actionserver'
+        docker_registry_login: ${{ secrets.DOCKERHUB_LOGIN }}
+        docker_registry_password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        # tag=latest - to auto deploy action server
+        # tag=${{ github.sha }} - to have real versionning
+        docker_image_tag: latest
+      
+    # - name: Pull and build new action server image
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host:  vps-30733418.vps.ovh.net 
+    #     username: ${{ secrets.VPS_USER }}
+    #     password: ${{ secrets.VPS_PWD }}
+    #     # port: 22
+    #     script: |
+    #       cd /etc/rasa
+    #       docker-compose pull app && docker-compose up -d
