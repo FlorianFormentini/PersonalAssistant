@@ -7,67 +7,19 @@ on:
       - .github/trigger_training.txt
     
 jobs:
-  data-validation:
-    name: Validate data changes 
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - id: files
-      uses: jitterbit/get-changed-files@v1
-    - name: Check for changes in training data 🕵️‍♂️
-      id: files_check
-      if: |
-          contains(  steps.files.outputs.all, 'bot/data/' )
-          || contains(  steps.files.outputs.all, 'bot/config.yml' )
-          || contains(  steps.files.outputs.all, 'bot/domain.yml' )
-          || contains(  steps.files.outputs.all, '.github/trigger_training.txt' )
-      run: |
-        echo "> Data files modified"
-        # set output for next jobs
-        echo "::set-output name=was_modified::true"
-
-    - name: Set up Python 🐍
-      if: ${{ steps.files_check.outputs.was_modified }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.9.13
-
-    - name: Install dependencies 🛠
-      if: ${{ steps.files_check.outputs.was_modified }}
-      run: |
-        python3 -m pip install --upgrade pip --user
-        python3 -m pip install -r bot/requirements-bot.txt --user
-
-    - name: Data Validation ✅
-      if: ${{ steps.files_check.outputs.was_modified }}
-      working-directory: ${{ github.workspace }}
-      run: |
-        rasa telemetry disable
-        cd bot
-        rasa data validate --debug
-    
-    outputs:  # pass training var to next jobs
-      training: ${{ steps.files_check.outputs.was_modified }}
-
-
   train-test-model:
     name: Train/test model and deploy to Dockerhub
-    needs: data-validation
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository 🔎
       uses: actions/checkout@v2
 
     - name: Set up Python 🐍
-      if: ${{needs.data-validation.outputs.training}}
       uses: actions/setup-python@v1
       with:
         python-version: 3.9.13
 
     - name: Install dependencies 🛠
-      if: ${{needs.data-validation.outputs.training}}
       run: |
         python3 -m pip install --upgrade pip --user
         python3 -m pip install -r bot/requirements-bot.txt --user
@@ -76,6 +28,7 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: |
         cd bot
+        rasa data validate --debug
         rasa train
         rasa test --fail-on-prediction-errors
 
