@@ -23,7 +23,8 @@ jobs:
     - name: Install dependencies 🛠
       run: |
         python3 -m pip install --upgrade pip --user
-        python3 -m pip install -r actions/requirements-actions.txt --user
+        python3 -m pip install black==22.3.0 flake8==4.0.1 --user
+
 
     - name: Lint code
       working-directory: ${{ github.workspace }}
@@ -46,10 +47,9 @@ jobs:
     - name: Install dependencies 🛠
       run: |
         python3 -m pip install --upgrade pip --user
-        python3 -m pip install -r actions/requirements-actions.txt --user
-        python3 -m pip install pytype==2022.2.23
+        python3 -m pip install pytype==2022.2.23 --user
 
-    # /!\ Pytype not supported on windows
+  
     - name: Code types check
       working-directory: ${{ github.workspace }}
       run: |

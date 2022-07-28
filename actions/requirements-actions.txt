@@ -1,7 +1,3 @@
 # action server
 rasa-sdk==3.1.0
 python-dotenv
-
-# lint/format/types
-black==22.3.0 
-flake8==4.0.1
