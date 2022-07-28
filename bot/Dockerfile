@@ -8,7 +8,7 @@ ENTRYPOINT []
 
 USER root
 
-RUN apt-get update && apt-get install software-properties-common
+RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository ppa:deadsnakes/ppa
 # Install py39 from deadsnakes repository
 RUN apt-get update && apt-get install -y python3.9 python3-pip
