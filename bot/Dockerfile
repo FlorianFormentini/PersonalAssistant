@@ -6,7 +6,7 @@ WORKDIR /app
 
 USER root
 
-RUN pip install -r actions/requirements-actions.txt
+RUN pip install -r bot/requirements-bot.txt
 
 USER 1001
 
