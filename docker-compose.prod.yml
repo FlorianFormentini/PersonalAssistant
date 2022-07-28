@@ -1,3 +1,5 @@
+
+
 version: '3.0'
 services:
   # Chatbot
@@ -7,11 +9,14 @@ services:
     networks: ['rasa-network']
     ports:
       - 5005:5005
-    env_file: vars-bot.env
+    env_file: .env
     command: >
       run
       --enable-api
       --cors='*'
+      --endpoints endpoints.yml
+      --jwt-secret ${JWT_SECRET}
+      --auth-token ${AUTH_TOKEN}
 
 
   action-server:
@@ -20,7 +25,6 @@ services:
     networks: ['rasa-network']
     ports:
       - 5055:5055
-    env_file: vars-actions.env
-  # Nginx ?
+    env_file: .env
 
 networks: {rasa-network: {}}

@@ -39,3 +39,16 @@ nlu:
     - Combien de douille j'ai fumé ?
     - est-ce que je peux fumer ?
     - est-ce que je peux couler une douille ?
+
+- intent: bot_presentation
+  examples: |
+    - Qui es-tu ?
+    - présentes-toi
+    - t'es qui?
+    - tu es un robot ?
+    - t'es un robot
+    - que sais-tu faire?
+    - tu fais quoi?
+    - tu sais faire quoi ?
+    - présentes-toi à tous le monde
+

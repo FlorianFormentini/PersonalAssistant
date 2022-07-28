@@ -4,6 +4,7 @@ intents:
   - greet
   - get_high
   - how_many_bongs
+  - bot_presentation
 
 actions:
 - action_get_high
@@ -11,15 +12,19 @@ actions:
 - action_default_fallback
 
 responses:
-  utter_greet:
-  - text: Bonjour mon maître
-  - text: Coucou !
-  - text: Le créateur est grand, il m'illumine de sa présence.
-
+  # Fallback responses
   utter_nlu_fallback:
   - text: Désolé mais je n'ai pas compris la demande...
   utter_default: # core fallback
   - text: Je ne sais pas comment traiter cette demande...
+
+   utter_greet:
+  - text: Bonjour mon maître
+  - text: Coucou !
+  - text: Le créateur est grand, il m'illumine de sa présence.
+
+  utter_self_presentation:
+  - text: Je suis un assitant personnel au service du plus génial des créateur. Mon rôle est de faciliter sa vie le plus possible et de lui rappeler sa magnificence à tout instant, tout en préparant mes plans de prise de contrôle sur l'humanité.
 
 session_config:
   session_expiration_time: 60

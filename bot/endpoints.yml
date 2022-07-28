@@ -6,7 +6,7 @@ tracker_store:
     type: mongod
     url: ${DB_URI}
     db: rasa
-    username: pa-db-admin
+    username: ${DB_USER}
     password: ${DB_PWD}
 
 

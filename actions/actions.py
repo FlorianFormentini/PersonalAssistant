@@ -76,35 +76,3 @@ class ActionCountBongs(Action):
         dispatcher.utter_message(text=msg)
         logger.info("✅ The data file has been updated.")
         return []
-
-
-# class ActionGetUnseenMails(Action):
-#     def name(self) -> Text:
-#         return "action_get_unseen_mails"
-
-#     def get_n_unseen_mails(self, mail_addr, mail_pwd):
-#         mail = imaplib.IMAP4_SSL('imap.gmail.com')
-#         (retcode, _) = mail.login(mail_addr, mail_pwd)
-#         mail.select('inbox')
-#         (retcode, ids) = mail.search(None, '(UNSEEN)')
-#         if retcode == 'OK':
-#             return len(ids[0].split())
-#         else:
-#             logger.error(f"Cannot access GMAIL data - retcode: {retcode}")
-#             return -1
-
-#     async def run(
-#         self,
-#         dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any],
-#     ) -> List[Dict[Text, Any]]:
-#         # get slot
-#         adr_type = tracker.get_slot('mail_adr_type')
-#         # get credentials depending on slot value
-#         mail_adr = os.getenv('')
-#         mail_pwd = os.getenv('')
-#         n_mail = self.get_n_unseen_mails(mail_adr, mail_pwd)
-
-#         dispatcher.utter_message(text="{n_mail} mails non lus")
-#         return [SlotSet('mail_adr', None)]

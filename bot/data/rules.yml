@@ -6,6 +6,11 @@ rules:
   - intent: greet
   - action: utter_greet
 
+- rule: Self-presentation
+  steps:
+  - intent: bot_presentation
+  - action: utter_self_presentation
+
 - rule: NLU Fallback
   steps:
   - intent: nlu_fallback

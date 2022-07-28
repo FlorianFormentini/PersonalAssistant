@@ -69,7 +69,7 @@ jobs:
       uses: RasaHQ/action-server-gha@main
       # Full list of parameters: https://github.com/RasaHQ/action-server-gha/tree/master#input-arguments
       with:
-        rasa_sdk_version: 3.1.0
+        rasa_sdk_version: 3.1.2
         actions_directory: actions
         requirements_file: actions/requirements-actions.txt
         docker_image_name: 'florianformentini/personalassistant-actionserver'
@@ -78,14 +78,4 @@ jobs:
         # tag=latest - to auto deploy action server
         # tag=${{ github.sha }} - to have real versionning
         docker_image_tag: latest
-      
-    # - name: Pull and build new action server image
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host:  vps-30733418.vps.ovh.net 
-    #     username: ${{ secrets.VPS_USER }}
-    #     password: ${{ secrets.VPS_PWD }}
-    #     # port: 22
-    #     script: |
-    #       cd /etc/rasa
-    #       docker-compose pull app && docker-compose up -d
+

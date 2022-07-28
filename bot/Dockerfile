@@ -1,4 +1,4 @@
-FROM rasa/rasa:3.2.4
+FROM rasa/rasa:3.1.6
 
 ADD . /app/
 

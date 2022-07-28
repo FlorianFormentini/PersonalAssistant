@@ -11,14 +11,15 @@ sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
 
 # Run the command:
 #  $ rasa run actions --port 5055 --debug
-sys.argv.append('run')
-sys.argv.append('actions')
-sys.argv.append('--actions')
-sys.argv.append('actions')
-sys.argv.append('--port')
-sys.argv.append('5055')  # change port if needed
-sys.argv.append('--debug')
+sys.argv.append("run")
+sys.argv.append("actions")
+sys.argv.append("--actions")
+sys.argv.append("actions")
+sys.argv.append("--port")
+sys.argv.append("5055")  # change port if needed
+sys.argv.append("--debug")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from rasa.__main__ import main
+
     main()
