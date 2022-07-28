@@ -3,7 +3,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - bot
+      - bot/**
       - .github/trigger_training.txt
     
 jobs:
@@ -60,7 +60,6 @@ jobs:
     - name: Checkout repository 🔎
       uses: actions/checkout@v2
 
-    # Train/test model only if data files modified
     - name: Set up Python 🐍
       if: ${{needs.data-validation.outputs.training}}
       uses: actions/setup-python@v1
