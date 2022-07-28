@@ -18,7 +18,7 @@ responses:
   utter_default: # core fallback
   - text: Je ne sais pas comment traiter cette demande...
 
-   utter_greet:
+  utter_greet:
   - text: Bonjour mon maître
   - text: Coucou !
   - text: Le créateur est grand, il m'illumine de sa présence.
