@@ -5,13 +5,14 @@ services:
   # Chatbot
   rasa:
     restart: always
-    image: florianformentini/personalassistant:latest
+    image: florianformentini/personalassistant:master
     networks: ['rasa-network']
     ports:
       - 5005:5005
     env_file: .env
     command: >
-      bash -c "pip install -r requirements-bot.txt &&
+      bash -c "
+      pip install -r requirements-bot.txt &&
       rasa run
       --enable-api
       --cors='*'
