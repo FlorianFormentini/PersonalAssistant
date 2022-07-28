@@ -1,4 +1,4 @@
-FROM ubuntu:22.4
+FROM ubuntu:latest
 
 ADD . /app/
 
