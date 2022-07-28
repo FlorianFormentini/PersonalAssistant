@@ -19,12 +19,14 @@ The main purpose of this bot is to interact with a HomeAssitant Supervised insta
 
 ---
 ## Local use
-**A `.env` file must be added to handle ALL credentials and secret vars.** The `docker-compose.yml` file is able to use read it when creating images (It is therefore possible to use the `${VAR}` syntax in this file without defining environment variables beforehand).  
+**A `.env` file must be added to handle ALL credentials and secret vars.** The `docker-compose.yml` file is able to read it when creating images (It is therefore possible to use the `${VAR}` syntax in the compose file without defining environment variables beforehand).  
 The same `.env` file is then injected in the 2 images when building them to access channels and tracker db credentials or others needed env vars.
 
 Needed env vars:
 - `RASA_VERSION`
 - `RASA_SDK_VERSION`
+- `SANIC_WORKERS`
+- `RASA_TELEMETRY_ENABLED`
 - `JWT_SECRET` and/or `AUTH_TOKEN`
 - `DB_URI`
 - `DB_USER`
