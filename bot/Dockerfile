@@ -1,4 +1,4 @@
-FROM rasa/rasa:3.1.6
+FROM ubuntu:22.4
 
 ADD . /app/
 

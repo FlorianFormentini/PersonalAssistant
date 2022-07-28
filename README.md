@@ -45,9 +45,10 @@ curl -XPOST http://localhost:5005/webhooks/rest/webhook \
   -d '{"sender": "test", "message": "hello"}'
 ```
 
-To quickly start the bot in the console and facilitate debugging two python scripts have been made in the `script` folder.
-
+To quickly start the bot in the console and facilitate debugging two python scripts have been made in the `script` folder.  
 It's also possible to use the rasa CLI normaly but only from the `bot` folder.
+
+The `docker-compose.prod.yml` file is used to pull the 2 docker images created during CICD onto my personal server.
 
 ### SpeechToText / TextToSpeech script
 The [`tests_STT_TTS.py`](scripts/tests_STT_TTS.py) script is a simple local voice interface to talk with the chatbot.  
@@ -57,9 +58,11 @@ If the bot is started on localhost:5005, just run the script in an other termina
 ---
 ## CI/CD
 
-### Chatbot
-The files needed to build the chatbot's image have been gathered in the `bot` folder with an appropriate `Dockerfile`.
-If something has been modified in this folder after a `push`, a new model is trained and a docker image is build then sent to [DockerHub](https://hub.docker.com)
+### Rasa Server
+The files needed to build the chatbot's server image have been gathered in the `bot` folder with an appropriate `Dockerfile`.
+If something has been modified in this folder after a `push`, a new model is trained and a docker image is build then sent to [DockerHub](https://hub.docker.com).
+
+nb: The rasa server Dockerfile doesn't use the official Rasa image because my personnal do not support the Tensorflow depend
 
 ### Action Server
 If python code has been modified in the `app/actions/` folder after a `push`, the code is verified (lint + types) with commands defined in the [`Makefile`](Makefile). Then the action server docker image is also build and sent to DockerHub.
