@@ -49,7 +49,7 @@ jobs:
       with:
         context: ./bot
         push: true
-        tags: personalassistant:master
+        tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
 
