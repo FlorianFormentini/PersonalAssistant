@@ -13,7 +13,7 @@ services:
     command: >
       bash -c "
       pip install -r requirements-bot.txt --no-cache &&
-      python3 -m rasa run
+      rasa run
       --enable-api
       --cors='*'
       --endpoints endpoints.yml
