@@ -48,7 +48,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip --user
         python3 -m pip install pytype==2022.2.23 --user
-        python3 -m pip install actions/requirements-actions.txt --user
+        python3 -m pip install -r actions/requirements-actions.txt --user
 
   
     - name: Code types check
