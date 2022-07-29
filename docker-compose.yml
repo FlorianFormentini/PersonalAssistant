@@ -9,9 +9,7 @@ services:
       - 5005:5005
     env_file: .env
     command: >
-      run
-      --enable-api
-      --cors='*'
+      rasa run --enable-api --cors='*'
       --endpoints endpoints.yml
       --jwt-secret ${JWT_SECRET}
       --auth-token ${AUTH_TOKEN}
