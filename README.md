@@ -1,8 +1,10 @@
 # Personal Assistant
 
 - **Made with:** [Rasa v3.1.6](https://rasa.com/docs/rasa/) / [Rasa SDK v3.1.2](https://rasa.com/docs/action-server/)
-- **Hosted on:** Personal Server  
 - **Tracker DB:** [MongoDB Atlas Cluster](https://www.mongodb.com/atlas/database)
+
+It was intended to be deployed on a personal home server but it has a too old CPU that doesn't support AVX (which is needed by Tensorflow). I tried differents solutions but I keep getting the same error after the `rasa run` command: `The TensorFlow library was compiled to use AVX instructions, but these aren't available on your machine.`
+
 
 ---
 ## Features
@@ -48,7 +50,8 @@ curl -XPOST http://localhost:5005/webhooks/rest/webhook \
 To quickly start the bot in the console and facilitate debugging two python scripts have been made in the `script` folder.  
 It's also possible to use the rasa CLI normaly but only from the `bot` folder.
 
-The `docker-compose.prod.yml` file is used to pull the 2 docker images created during CICD onto my personal server.
+The `docker-compose.prod.yml` file is used to pull the 2 docker images created during CICD onto my personal server. 
+
 
 ### SpeechToText / TextToSpeech script
 The [`tests_STT_TTS.py`](scripts/tests_STT_TTS.py) script is a simple local voice interface to talk with the chatbot.  
@@ -60,9 +63,7 @@ If the bot is started on localhost:5005, just run the script in an other termina
 
 ### Rasa Server
 The files needed to build the chatbot's server image have been gathered in the `bot` folder with an appropriate `Dockerfile`.
-If something has been modified in this folder after a `push`, a new model is trained and a docker image is build then sent to [DockerHub](https://hub.docker.com).
-
-nb: The rasa server Dockerfile doesn't use the official Rasa image because my personnal do not support the Tensorflow depend
+If something has been modified in this folder after a `push`, a new model is trained and a docker image is build then sent to [DockerHub](https://hub.docker.com).  
 
 ### Action Server
 If python code has been modified in the `app/actions/` folder after a `push`, the code is verified (lint + types) with commands defined in the [`Makefile`](Makefile). Then the action server docker image is also build and sent to DockerHub.
@@ -70,4 +71,5 @@ If python code has been modified in the `app/actions/` folder after a `push`, th
 ---
 ## 📚 Ressources
 
-- Personally, I can handle Nginx and an automatic SSL generation with HomeAssistant to enable HTTPS access to the chatbot. But here is a great tutorial to do it manually : [Using Docker to Set up Nginx Reverse Proxy With Auto SSL Generation](https://linuxhandbook.com/nginx-reverse-proxy-docker/)
+- [Tuto](https://linuxhandbook.com/nginx-reverse-proxy-docker/) to manually setup Nginx with auto SSL an geneneration using Docker
+  - An easiest alternative with a great GUI: [Nginx Proxy Manager](https://nginxproxymanager.com/)

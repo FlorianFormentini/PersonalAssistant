@@ -11,7 +11,7 @@ services:
       - 5005:5005
     env_file: .env
     command: >
-      bash -c "
+      bash -c "pip uninstall tensorflow -y &&
       pip install -r requirements-bot.txt --no-cache &&
       rasa run
       --enable-api
