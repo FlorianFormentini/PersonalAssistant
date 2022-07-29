@@ -8,8 +8,7 @@ ENTRYPOINT []
 
 USER root
 
+RUN pip install --upgrade pip 
 RUN pip install -r requirements-bot.txt --no-cache
-
-USER 1001
 
 CMD ["rasa", "--help"]
